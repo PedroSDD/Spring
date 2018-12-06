@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="spring-in-5-steps/spring-in-5-steps/src/main/java"/>
+	<classpathentry kind="src" path="spring-in-5-steps/spring-in-5-steps/src/test/java"/>
+	<classpathentry kind="src" path="spring-in-5-steps/src/main/java"/>
+	<classpathentry kind="src" path="spring-in-5-steps/src/test/java"/>
+	<classpathentry kind="lib" path="spring-in-5-steps/.mvn/wrapper/maven-wrapper.jar"/>
+	<classpathentry kind="lib" path="spring-in-5-steps/spring-in-5-steps/.mvn/wrapper/maven-wrapper.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="spring-in-5-steps/target/classes"/>
+</classpath>
