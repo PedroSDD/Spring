@@ -26,20 +26,24 @@ public class SurveyController {
 		return surveyService.retrieveQuestions(surveyId);	
 	}
 	
-	@GetMapping("/surveys/{surveyId}/questions")
+	@GetMapping("/surveys/{surveyId}/questions/{questionId}")
 	public Question retrieveDetailsForQuestionsForSurvey(@PathVariable String surveyId, @PathVariable String questionId){
 		return surveyService.retrieveQuestion(surveyId, questionId);
 	}
 	
-	@PostMapping("/surveys/{surveyId}/questions/{questionId}")
-	public ResponseEntity<Void> addQuestionsForSurvey(@PathVariable String surveyId, @RequestBody Question newQuestion){
+	@PostMapping("/surveys/{surveyId}/questions")
+	public ResponseEntity<Void> addQuestionToSurvey(
+			@PathVariable String surveyId, @RequestBody Question newQuestion) {
+
 		Question question = surveyService.addQuestion(surveyId, newQuestion);
-		
-		if(question==null)
+
+		if (question == null)
 			return ResponseEntity.noContent().build();
-		
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(question.getId()).toUri();
+
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path(
+				"/{id}").buildAndExpand(question.getId()).toUri();
+
+		// Status
 		return ResponseEntity.created(location).build();
 	}
-
 }
