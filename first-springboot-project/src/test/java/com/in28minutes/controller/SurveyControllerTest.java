@@ -25,7 +25,7 @@ import com.in28minutes.springboot.model.Question;
 import com.in28minutes.service.SurveyService;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(value = SurveyController.class)
+@WebMvcTest(value = SurveyController.class, secure = false)
 public class SurveyControllerTest {
 
 	@Autowired
@@ -55,32 +55,34 @@ public class SurveyControllerTest {
 
 		JSONAssert.assertEquals(expected, result.getResponse()
 				.getContentAsString(), false);
+
+		// Assert
 	}
-	
-	  @Test
-	    public void createSurveyQuestion() throws Exception {
-	    		Question mockQuestion = new Question("1", "Smallest Number", "1",
-					Arrays.asList("1", "2", "3", "4"));
 
-			String questionJson = "{\"description\":\"Smallest Number\",\"correctAnswer\":\"1\",\"options\":[\"1\",\"2\",\"3\",\"4\"]}";
-			//surveyService.addQuestion to respond back with mockQuestion
-			Mockito.when(
-					surveyService.addQuestion(Mockito.anyString(), Mockito
-							.any(Question.class))).thenReturn(mockQuestion);
+	@Test
+	public void createSurveyQuestion() throws Exception {
+		Question mockQuestion = new Question("1", "Smallest Number", "1",
+				Arrays.asList("1", "2", "3", "4"));
 
-			//Send question as body to /surveys/Survey1/questions
-			RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
-					"/surveys/Survey1/questions")
-					.accept(MediaType.APPLICATION_JSON).content(questionJson)
-					.contentType(MediaType.APPLICATION_JSON);
+		String questionJson = "{\"description\":\"Smallest Number\",\"correctAnswer\":\"1\",\"options\":[\"1\",\"2\",\"3\",\"4\"]}";
+		//surveyService.addQuestion to respond back with mockQuestion
+		Mockito.when(
+				surveyService.addQuestion(Mockito.anyString(), Mockito
+						.any(Question.class))).thenReturn(mockQuestion);
 
-			MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		//Send question as body to /surveys/Survey1/questions
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
+				"/surveys/Survey1/questions")
+				.accept(MediaType.APPLICATION_JSON).content(questionJson)
+				.contentType(MediaType.APPLICATION_JSON);
 
-			MockHttpServletResponse response = result.getResponse();
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 
-			assertEquals(HttpStatus.CREATED.value(), response.getStatus());
+		MockHttpServletResponse response = result.getResponse();
 
-			assertEquals("http://localhost/surveys/Survey1/questions/1", response
-					.getHeader(HttpHeaders.LOCATION));
-	  }
+		assertEquals(HttpStatus.CREATED.value(), response.getStatus());
+
+		assertEquals("http://localhost/surveys/Survey1/questions/1", response
+				.getHeader(HttpHeaders.LOCATION));
+	}
 }
